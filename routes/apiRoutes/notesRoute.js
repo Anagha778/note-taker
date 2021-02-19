@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const fs = require('fs');
+const path = require('path');
 const { createNewNote, validateNote } = require('../../lib/notes');
 const { notes } = require('../../db/db');
 const { v4: uuidv4 } = require('uuid');
@@ -27,30 +28,32 @@ router.post('/notes', (req, res) => {
 
 //remove the note with the given id property
 router.delete('/notes/:id',(req, res) => {
-    let noteid = req.params.id;
-    for (let i =0;i<notes.length ;i++)
-    {   let flag = false;
-        if (noteid === notes[i].id)
-        {
-            notes.splice(i,1);
-            flag = true;
-            break;
-        }
-    }
+  let noteid = req.params.id;
+  let flag = false;
+  for (let i =0;i<notes.length ;i++)
+  {   flag = false;
+      if (noteid === notes[i].id)
+      {
+          notes.splice(i,1);
+          flag = true;
+          break;
+      }
+  }
 
-    if(flag)
-    {
-    //write all remaining notes to file db.json
-      fs.writeFileSync(
-          path.join(__dirname, '../db/db.json'),
-          JSON.stringify({ notes: notes }, null, 2)
-      ); 
-      res.json(noteid);
-    } 
-    else 
-    {
-      res.send(404);
-    }
+  if(flag)
+  {
+  //write all remaining notes to file db.json
+  console.log(flag);
+    fs.writeFileSync(
+        path.join(__dirname, '../../db/db.json'),
+        JSON.stringify({ notes: notes }, null, 2)
+    ); 
+    res.json(notes);
+  } 
+  else 
+  {
+    res.send(404);
+  }
 });
 
 module.exports  = router;
