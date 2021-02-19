@@ -35,6 +35,11 @@ THEN I am presented with empty fields to enter a new note title and the note’s
 * GET /notes - return the notes.html file.
 * GET * - return the index.html file.
 
+## Commands to Install dependencies 
+* npm init - to add package.json file
+* npm i express - to install express package
+* npm i uuid - to install uuid package to generate unique id.
+
 ## Mock up images
 The following image demonstrates the application functionality:
 
